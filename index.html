@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>商品购买</title>
+    <link rel="stylesheet" href="css/index.css">
+
+
+</head>
+<body>
+    <div class="main">
+         <div class="productList">
+             <img src="images/1.jpg" alt="">
+             <img src="images/2.jpg" alt="">
+             <img src="images/3.jpg" alt="">
+             <img src="images/4.jpg" alt="">
+             <img src="images/5.jpg" alt="">
+             <img src="images/6.jpg" alt="">
+             <img src="images/7.jpg" alt="">
+             <img src="images/8.jpg" alt="">
+         </div>
+         <div class="content">
+             <div class="color mart16">
+                 <p class="colhongzi">选择颜色（请填写数字）如选择白色，请填写对应的数字5</p>
+                 <div class="selectColor">
+                     <input type="text">
+                 </div>
+             </div>
+             <div class="size mart16">
+                 <p class="colhongzi">请选择码数</p>
+                 <p class="">（36-42）码，例如您穿的是38码，就填38</p>
+                 <div class="selectColor">
+                     <input type="text">
+                 </div>
+             </div>
+             <div class="name mart16">
+                 <p class="colhongzi">姓名：</p>
+                 <div class="selectColor">
+                     <input type="text">
+                 </div>
+             </div>
+             <div class="phone mart16">
+                 <p class="colhongzi">手机：</p>
+                 <div class="selectColor">
+                     <input type="text">
+                 </div>
+             </div>
+             <div class="address mart16">
+                 <p class="colhongzi">地址：</p>
+                 <select id="cmbProvince"></select>
+                 <select id="cmbCity"></select>
+                 <select id="cmbArea"></select>
+                 <div class="selectColor ">
+                     <input class="xiangxi" type="text" placeholder="详细地址">
+                 </div>
+                 <div class="selectColor ">
+                     <input class="youbian" type="text" placeholder="邮编（选填）">
+                 </div>
+
+                 <div class="submit">
+                     提交订单，货到付款
+                 </div>
+                 <div class="company">
+                     xxx有限公司
+                 </div>
+             </div>
+         </div>
+         <div class="fixed">
+            <ul>
+                <li class="first"><a href="tel:18086509461">热线咨询</a></li>
+                <li><a href="weixin://18086509461">在线咨询</a></li>
+            </ul>
+        </div>
+    </div>
+    <script src="js/common/jquery.js"></script>
+    <script src="js/common/resize.js"></script>
+    <script src="js/jsAddress.js"></script>
+    <script src="js/common/modalNew.js"></script>
+    <script>
+        addressInit('cmbProvince', 'cmbCity', 'cmbArea', '湖北省', '武汉', '洪山区');
+
+        /* function isDefine(value) {
+         if (value == null || value == "" || value == "undefined" || value == undefined || value == "null" || value == "(null)" || value == 'NULL' || typeof(value) == 'undefined') {
+         return false;
+         } else{
+         value = value+"";
+         value = value.replace(/\s/g,"");
+         if(value == ""){
+         return false;
+         }
+         return true;
+         }
+         }*/
+        var $color;
+        var $size;
+        var $name;
+        var $phone;
+        var $xiangxi;
+        $(".selectColor input").on("keyup",function(){
+            $color=parseInt($(".color input").val());
+            $size=parseInt($(".size input").val());
+            $name=$(".name input").val();
+            $phone=$(".phone input").val();
+            $xiangxi=$(".address input").val();
+        });
+
+
+        $(".submit").on("click",function(){
+           /* $color=parseInt($(".color input").val());
+            $size=parseInt($(".size input").val());
+            $name=$(".name input").val();
+            $phone=$(".phone input").val();
+            $xiangxi=$(".address input").val();*/
+            var $province=$("#cmbProvince").val();
+            var $cmbCity=$("#cmbCity").val();
+            var $cmbArea=$("#cmbArea").val();
+            console.log($color,$size);
+           // console.log($province,$cmbCity,$cmbArea);
+
+            if(!$color){
+                openToast({
+                    intro:"请写入产品颜色代号"
+                });
+                return false
+            }else if ($color<1||$color>6) {
+                openToast({
+                    intro:"请写入合适颜色代号"
+                });
+                return false
+            }
+
+            if(!$size){
+                openToast({
+                    intro:"请选择码数"
+                });
+                return false;
+            }else{
+                if ($size<36||$size>42) {
+                    openToast({
+                        intro:"请写入合适码数"
+                    });
+                    return false
+                }
+            }
+            if(!$name){
+                openToast({
+                    intro:"请填写姓名"
+                });
+                return false;
+            } else{
+                var reg = /^[\u4E00-\u9FA5A-Za-z]+$/;
+                if(!reg.test($name)){
+                    openToast({
+                        intro:"姓名格式错误"
+                    });
+                    return false
+                }
+            }
+            if(!$phone){
+                openToast({
+                    intro:"请输入电话号码"
+                });
+                return false;
+            }else{
+                var reg =  /^1\d{10}$/;
+                if (!reg.test($phone)) {
+                    openToast({
+                        intro:"电话号码格式错误"
+                    });
+                    return false
+                }
+            }
+            if(!$province||!$cmbCity||!$cmbArea){
+                openToast({
+                    intro:"请选择省市区"
+                });
+                return false
+            }
+            if(!$xiangxi){
+                openToast({
+                    intro:"请填写详细地址"
+                });
+                return false
+            }
+            openToast({
+                intro:"信息可以发送"
+            });
+        })
+    </script>
+</body>
+
+</html>
